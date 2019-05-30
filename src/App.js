@@ -13,6 +13,7 @@ function Header(){
   return <h1>This is a header</h1>
 }
 class App extends Component {
+  state = {login :false}
   render() {
     /*return (
       <div className="App">
@@ -37,7 +38,12 @@ class App extends Component {
       <Router>
       <div className="App">
         <Header title="dsfs"></Header>
-        <Route path="/user" exact strict component = {User}/>
+        { !this.state.login && 
+          <Route exact path="/user" component={User} />
+        }
+
+
+
      <Route path="/" exact strict render={
           ()=>{
             return(

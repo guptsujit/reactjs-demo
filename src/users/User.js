@@ -10,7 +10,7 @@ class User extends Component{
          {name:"Preeti",empid :2430}
       ],
       title : {heading : "User List"},
-      name : {firstname : "sujit"},
+      name : {firstname : "",lastname : ""},
       email : {email : "sujit.kumar@irissoftware.com"}
   }; 
 
@@ -32,8 +32,10 @@ class User extends Component{
   }
   
   changeNameFormInput = (event)=>{
+    console.log(event.target.id);
+   const key = event.target.id;
      this.setState({
-     name :  {firstname : event.target.value}
+     name :  {[key] : event.target.value}
     })
   }
 
@@ -62,7 +64,8 @@ class User extends Component{
               <br/>
                 <button onClick={this.props.onAgeDown}>Age Down</button>
               <br/>
-          <input type="text" onChange={this.changeNameFormInput} value={this.state.name.firstname}/><br/>
+          <input type="text" onChange={this.changeNameFormInput} id = "firstname" value={this.state.name.firstname}/><br/>
+            <input type="text" onChange={this.changeNameFormInput} id = "lastname" value={this.state.name.lastname}/><br/>
         {
             this.state.student.map((student)=>{
                
@@ -80,14 +83,19 @@ function mapDispatchToProps(dispach){
     // dispatching plain actions
     onAgeUp: () => dispach({ type: 'AGE_UP' }),
     onAgeDown: () => dispach({ type: 'AGE_DOWN' }),
+    increment : function(){
+      return dispach({ type: 'AGE_DOWN' });
+    }
   }
 }
+
+
 //It is called every time the store state changes.
 //It receives the entire store state, and should return an object of data this component needs.
 function mapStateToProps(state) {
  return {age:state.age}
 }
 
-
+console.dir(connect(mapStateToProps,mapDispatchToProps));
 // Now connect above two functions to sore using connect functions
 export default connect(mapStateToProps,mapDispatchToProps) (User);
